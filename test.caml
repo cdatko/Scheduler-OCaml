@@ -1,0 +1,37 @@
+let needs = [
+("ece2090",1,"m",13,16);
+("ece2090",2,"tu",13,16);
+("ece2090",3,"w",13,16);
+("ece2090",4,"f",9,12);
+("ece2060",1,"tu",11,14);
+("ece2060",2,"tu",14,17);
+("ece2060",3,"w",9,12);
+("ece2060",4,"f",13,16);
+("ece3520",1,"tu",11,14);
+("ece3520",2,"tu",14,17);
+("ece4420",1,"w",13,16);
+("ece4420",2,"f",13,16)];;
+
+let resources = [
+("joe", ["ece2090";"ece2010";"ece3520";"ece4420"],[]);
+("sam", ["ece2010";"ece4420"],[]);
+("pete", ["ece3520";"ece4420"],[]);
+("randi", ["ece2090"],[]);
+("gwen", ["ece2090";"ece2010"],[])];;
+
+let resources2 = [
+("joe", ["ece2090";"ece2010";"ece3520";"ece4420"],[("m",13,16)]);
+("sam", ["ece2010";"ece4420"],[]);
+("pete", ["ece3520";"ece4420"],[]);
+("randi", ["ece2090"],[]);
+("gwen", ["ece2090";"ece2010"],[])];;
+
+let as1 = assign((List.hd needs),(List.hd resources ));;
+let as2 = assign((List.nth needs 1),(List.hd resources));;
+
+let cs1 = course_solution((List.hd needs), resources);;
+let cs2 = course_solution((List.hd needs), resources2);;
+
+let r1 = remove_student("joe",resources);;
+let r2 = remove_student("sam",resources2);;
+

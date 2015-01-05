@@ -1,0 +1,67 @@
+(* print_assignment *)
+let print_assignment (student, course, section) =
+	print_string student; print_string " is assigned to ";
+	print_string course; print_string " section "; print_int section;
+	print_string "\n";;
+
+(* no_overlap *)
+let no_overlap (a, b, c, d) =
+	if ((c < a) && (d <= a)) || ((a < c) && (b <= c)) then true
+	else false;;
+
+(* no_conflict *)
+let no_conflict (aday, astart, astop, (sday, sstart, sstop)) = 
+	if ( compare  aday sday = 0) then
+		if ( no_overlap(astart, astop, sstart, sstop) ) then true
+		else false
+	else true;;
+
+(* no_conflict_all_unavailable *)
+let rec no_conflict_all_unavailable (aday, astart, astop, unavail_tuple_list) = 
+	if ( unavail_tuple_list == [] ) then true
+	else
+	if ( List.tl(unavail_tuple_list) == [] ) then 
+		no_conflict(aday, astart, astop, List.hd(unavail_tuple_list))
+	else
+		no_conflict(aday, astart, astop, List.hd(unavail_tuple_list)) &&
+		no_conflict_all_unavailable(aday, astart, astop, List.tl(unavail_tuple_list));;
+
+(* Assign *)
+let rec assign ((course_name,section,day,ts,tf),(student_name,capabilities_list,unavailable_list)) =
+	if ( not(List.mem course_name capabilities_list) ) then
+		("none", 0, "none")
+	else 
+		if ( no_conflict_all_unavailable( day, ts, tf, unavailable_list) ) then
+			(course_name, section, student_name)
+		else
+			("none", 0, "none");; 
+		
+(* Course Solution *)
+let rec course_solution (aneed, resource_list) = 
+	if ( List.tl(resource_list) == [] ) then
+		assign(aneed, List.hd(resource_list))
+	else
+	if ( compare (assign(aneed, List.hd(resource_list))) ("none", 0, "none") = 0 ) then
+		course_solution(aneed, List.tl(resource_list))
+	else
+		assign(aneed, List.hd(resource_list));;
+
+(* remove_student *)
+let remove_student (name, rlist) = 
+	if (compare name "none" = 0) then rlist
+	else
+		List.filter (fun (x,_,_) -> compare name x != 0) rlist;;
+
+(* overall_solution *)
+let rec overall_solution ( needs, resources) =
+	(* Last thing to do *)
+
+		
+			
+
+
+
+
+
+
+	
